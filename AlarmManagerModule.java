@@ -1,6 +1,3 @@
-package com.wakeupify;
-
-// Android
 import android.widget.Toast;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,7 +5,6 @@ import android.content.Intent;
 import android.content.Context;
 import java.util.Calendar;
 
-// React
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
