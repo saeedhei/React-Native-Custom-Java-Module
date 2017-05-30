@@ -27,18 +27,20 @@ public class AlarmManagerModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void setAlarm() {
-       Context context = getReactApplicationContext();
+        
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pintent = PendingIntent.getBroadcast(MainActivity.this, 199, intent, 0);
+        
+        // Tests now work with setExact
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+        calendar.set(Calendar.MINUTE, 54);
 
-       // Create and package up the intent
-       Intent intent = new Intent(context, AlarmReceiver.class);
-       PendingIntent pintent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pintent);
 
-       // Set the alarm
-       AlarmManager alarmManager = (AlarmManager) getReactApplicationContext().getSystemService(Context.ALARM_SERVICE);
-       alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-               + (5 * 1000), pintent);
-
-       Toast.makeText(getReactApplicationContext(), "Alarm set..",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Alarm set!",Toast.LENGTH_LONG).show();
    }
 
 }
